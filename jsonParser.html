@@ -2,43 +2,65 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>File Upload</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>James Lumber - JSON Parser</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      padding: 20px;
+      margin: 0;
+      padding: 0;
+      background-color: rgba(34, 34, 34, 1);
+      color: white;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
     }
+
     .container {
-      max-width: 400px;
-      margin: 0 auto;
-    }
-    .upload-area {
-      border: 2px dashed #ccc;
-      border-radius: 5px;
+      max-width: 800px;
+      margin: 50px auto;
       padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 1.8rem;
+    }
+
+    .upload-area {
+      border: 2px dashed #00c853;
+      border-radius: 5px;
+      padding: 30px;
       text-align: center;
       margin: 20px 0;
       transition: all 0.3s ease;
+      background-color: rgba(0, 0, 0, 0.2);
     }
+
     .upload-area.dragover {
-      border-color: #2196F3;
-      background-color: #f0f8ff;
+      border-color: #00c853;
+      background-color: rgba(0, 200, 83, 0.1);
     }
+
     input[type="file"] {
       margin-top: 10px;
+      color: white;
     }
+
     .file-info {
       margin-top: 10px;
-      padding: 10px;
-      background-color: #f5f5f5;
+      padding: 15px;
+      background-color: rgba(0, 0, 0, 0.2);
       border-radius: 4px;
+      color: #00c853;
     }
+
     .process-button {
       display: block;
       width: 100%;
       padding: 12px 20px;
       margin-top: 20px;
-      background-color: #2196F3;
+      background-color: #00c853;
       color: white;
       border: none;
       border-radius: 5px;
@@ -46,29 +68,51 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
+
     .process-button:hover {
-      background-color: #1976D2;
+      background-color: #009624;
     }
+
     .process-button:disabled {
-      background-color: #ccc;
+      background-color: #333;
       cursor: not-allowed;
     }
+
     .output-box {
       margin-top: 20px;
       padding: 15px;
-      background-color: #f5f5f5;
-      border: 1px solid #ddd;
+      background-color: rgba(0, 0, 0, 0.2);
+      border: 1px solid #00c853;
       border-radius: 5px;
       max-height: 300px;
       overflow-y: auto;
       font-family: monospace;
       white-space: pre-wrap;
+      color: #00c853;
+    }
+
+    /* Fade-in animation */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .container {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease-out forwards 0.5s;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Upload a File</h2>
+    <h2>JSON Parser</h2>
     <div class="upload-area" id="dropZone">
       <p>Drag and drop your file here</p>
       <p>or</p>
@@ -82,6 +126,11 @@
   </div>
 
   <script>
+    // Smooth fade-in effect on page load
+    document.addEventListener("DOMContentLoaded", function () {
+      document.body.style.opacity = "1";
+    });
+
     const fileInput = document.getElementById('fileInput');
     const fileNameDisplay = document.getElementById('fileName');
     const dropZone = document.getElementById('dropZone');
