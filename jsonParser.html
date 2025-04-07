@@ -108,10 +108,30 @@
       transform: translateY(20px);
       animation: fadeInUp 1s ease-out forwards 0.5s;
     }
+
+    .back-button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-bottom: 20px;
+      background-color: rgba(0, 0, 0, 0.2);
+      color: white;
+      text-decoration: none;
+      border: 1px solid #00c853;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .back-button:hover {
+      background-color: #00c853;
+      color: white;
+    }
   </style>
 </head>
 <body>
   <div class="container">
+    <a href="home.html" class="back-button">← Back to Home Page</a>
     <h2>JSON Parser</h2>
     <div class="upload-area" id="dropZone">
       <p>Drag and drop your file here</p>
