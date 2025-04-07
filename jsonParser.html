@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>File Upload</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .upload-area {
+      border: 2px dashed #ccc;
+      border-radius: 5px;
+      padding: 20px;
+      text-align: center;
+      margin: 20px 0;
+      transition: all 0.3s ease;
+    }
+    .upload-area.dragover {
+      border-color: #2196F3;
+      background-color: #f0f8ff;
+    }
+    input[type="file"] {
+      margin-top: 10px;
+    }
+    .file-info {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #f5f5f5;
+      border-radius: 4px;
+    }
+    .process-button {
+      display: block;
+      width: 100%;
+      padding: 12px 20px;
+      margin-top: 20px;
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .process-button:hover {
+      background-color: #1976D2;
+    }
+    .process-button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    .output-box {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f5f5f5;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      max-height: 300px;
+      overflow-y: auto;
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Upload a File</h2>
+    <div class="upload-area" id="dropZone">
+      <p>Drag and drop your file here</p>
+      <p>or</p>
+      <form id="fileForm">
+        <input type="file" id="fileInput" />
+      </form>
+    </div>
+    <div class="file-info" id="fileName"></div>
+    <button class="process-button" id="processButton" disabled>Process File</button>
+    <div class="output-box" id="outputBox"></div>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const fileNameDisplay = document.getElementById('fileName');
+    const dropZone = document.getElementById('dropZone');
+    const processButton = document.getElementById('processButton');
+
+    // Handle file input change
+    fileInput.addEventListener('change', handleFileSelect);
+
+    // Prevent default drag behaviors
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+      dropZone.addEventListener(eventName, preventDefaults, false);
+    });
+
+    // Highlight drop zone when item is dragged over it
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropZone.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropZone.addEventListener(eventName, unhighlight, false);
+    });
+
+    // Handle dropped files
+    dropZone.addEventListener('drop', handleDrop, false);
+
+    function preventDefaults(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    function highlight(e) {
+      dropZone.classList.add('dragover');
+    }
+
+    function unhighlight(e) {
+      dropZone.classList.remove('dragover');
+    }
+
+    function handleDrop(e) {
+      const dt = e.dataTransfer;
+      const files = dt.files;
+      handleFiles(files);
+    }
+
+    function handleFileSelect(e) {
+      const files = e.target.files;
+      handleFiles(files);
+    }
+
+    function handleFiles(files) {
+      if (files.length > 0) {
+        const file = files[0];
+        fileNameDisplay.textContent = `Selected file: ${file.name}`;
+        processButton.disabled = false;
+      } else {
+        fileNameDisplay.textContent = '';
+        processButton.disabled = true;
+      }
+    }
+  </script>
+  <script src="jsonParser/uuid.js"></script>
+  <script src="jsonParser/tictactoeParser.js"></script>
+</body>
+</html>
